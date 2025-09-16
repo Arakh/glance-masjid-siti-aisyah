@@ -213,25 +213,25 @@ p.text-reminder {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	font-size: 1.6vw;
+	font-size: 1.8vw;
 	text-align: center;
 	color: white;
 	margin: 6px;
-	line-height: 3.5vh;
+	line-height: 4vh;
 
 	transform:translateX(100%);
 	-moz-transform:translateX(100%);
 	-webkit-transform:translateX(100%);
 }
 .marquee p:nth-child(1) {
-	animation: left-one 20s ease infinite;
-	-moz-animation: left-one 20s ease infinite;
-	-webkit-animation: left-one 20s ease infinite;
+	animation: left-one 40s ease infinite;
+	-moz-animation: left-one 40s ease infinite;
+	-webkit-animation: left-one 40s ease infinite;
 }
 .marquee p:nth-child(2) {
-	animation: left-two 20s ease infinite;
-	-moz-animation: left-two 20s ease infinite;
-	-webkit-animation: left-two 20s ease infinite;
+	animation: left-two 40s ease infinite;
+	-moz-animation: left-two 40s ease infinite;
+	-webkit-animation: left-two 40s ease infinite;
 }
 .marquee.down p {
 	transform:translateY(-100%);
@@ -239,14 +239,14 @@ p.text-reminder {
 	-webkit-transform:translateY(-100%);
 }
 .marquee.down p:nth-child(1) {
-	animation: down-one 20s ease infinite;
-	-moz-animation: down-one 20s ease infinite;
-	-webkit-animation: down-one 20s ease infinite;
+	animation: down-one 40s ease infinite;
+	-moz-animation: down-one 40s ease infinite;
+	-webkit-animation: down-one 40s ease infinite;
 }
 .marquee.down p:nth-child(2) {
-	animation: down-two 20s ease infinite;
-	-moz-animation: down-two 20s ease infinite;
-	-webkit-animation: down-two 20s ease infinite;
+	animation: down-two 40s ease infinite;
+	-moz-animation: down-two 40s ease infinite;
+	-webkit-animation: down-two 40s ease infinite;
 }
 .marquee.up p {	
 	transform:translateY(100%);
@@ -254,14 +254,14 @@ p.text-reminder {
 	-webkit-transform:translateY(100%);
 }
 .marquee.up p:nth-child(1) {
-	animation: up-one 20s ease infinite;
-	-moz-animation: up-one 20s ease infinite;
-	-webkit-animation: up-one 20s ease infinite;
+	animation: up-one 40s ease infinite;
+	-moz-animation: up-one 40s ease infinite;
+	-webkit-animation: up-one 40s ease infinite;
 }
 .marquee.up p:nth-child(2) {
-	animation: up-two 20s ease infinite;
-	-moz-animation: up-two 20s ease infinite;
-	-webkit-animation: up-two 20s ease infinite;
+	animation: up-two 40s ease infinite;
+	-moz-animation: up-two 40s ease infinite;
+	-webkit-animation: up-two 40s ease infinite;
 }
 
 /*================================
