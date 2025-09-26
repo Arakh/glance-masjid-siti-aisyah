@@ -37,9 +37,13 @@ function setChecked(id, checked) {
 }
 
 function setConfig(data) {
-  var date = new Date();
-  date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
-  document.cookie = "config=" + JSON.stringify(data) + ";" + "expires=" + date.toUTCString() + ";path=/";
+  fetch("http://worldtimeapi.org/api/timezone/Asia/Jakarta")
+  .then(res => res.json())
+  .then(data => {
+     console.log("Current time:", data.datetime)
+     var date = new Date(data.datetime);
+     document.cookie = "config=" + JSON.stringify(data) + ";" + "expires=" + date.toUTCString() + ";path=/";
+  });
 }
 
 function getConfig() {
