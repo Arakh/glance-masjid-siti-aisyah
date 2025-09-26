@@ -54,7 +54,7 @@ function getConfig() {
 }
 
 function reset() {
-  var date = convertToUTC7;
+  var date = convertToUTC7();
   date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
   document.cookie = "config=;" + "expires=" + date.toUTCString() + ";path=/";
 }
@@ -542,7 +542,7 @@ function preview() {
 }
 
 var data = {};
-var cur_date = convertToUTC7;
+var cur_date = convertToUTC7();
 var cur_index = 0;
 var cur_bulan = cur_date.getMonth() + 1;
 var cur_tahun = cur_date.getFullYear();
@@ -597,7 +597,7 @@ function gmod(n, m) {
 }
 
 function kuwaiticalendar(adjust) {
-  var today = convertToUTC7;
+  var today = convertToUTC7();
   if (adjust) {
   adjustmili = 1000*60*60*24*adjust; 
   todaymili = today.getTime()+adjustmili;
@@ -733,7 +733,7 @@ function updateJam() {
   if (action != "preview") {
     return;
   }
-  var date = convertToUTC7;
+  var date = convertToUTC7();
   //date.setHours(23, 59);
   var jam = date.getHours();
   if (jam < 10) {
