@@ -37,13 +37,8 @@ function setChecked(id, checked) {
 }
 
 function setConfig(data) {
-  fetch("http://worldtimeapi.org/api/timezone/Asia/Jakarta")
-  .then(res => res.json())
-  .then(data => {
-     console.log("Current time:", data.datetime)
-     var date = new Date(data.datetime);
+     var date = convertToUTC7();
      document.cookie = "config=" + JSON.stringify(data) + ";" + "expires=" + date.toUTCString() + ";path=/";
-  });
 }
 
 function getConfig() {
@@ -59,7 +54,7 @@ function getConfig() {
 }
 
 function reset() {
-  var date = new Date();
+  var date = convertToUTC7;
   date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
   document.cookie = "config=;" + "expires=" + date.toUTCString() + ";path=/";
 }
@@ -75,7 +70,7 @@ function getItem() {
 function clearData() {
   window.localStorage.clear();
   document.cookie.split(";").forEach(function(c) {
-    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + convertToUTC7.toUTCString() + ";path=/");
   });
 }
 
@@ -547,7 +542,7 @@ function preview() {
 }
 
 var data = {};
-var cur_date = new Date();
+var cur_date = convertToUTC7;
 var cur_index = 0;
 var cur_bulan = cur_date.getMonth() + 1;
 var cur_tahun = cur_date.getFullYear();
@@ -602,7 +597,7 @@ function gmod(n, m) {
 }
 
 function kuwaiticalendar(adjust) {
-  var today = new Date();
+  var today = convertToUTC7;
   if (adjust) {
   adjustmili = 1000*60*60*24*adjust; 
   todaymili = today.getTime()+adjustmili;
@@ -738,7 +733,7 @@ function updateJam() {
   if (action != "preview") {
     return;
   }
-  var date = new Date();
+  var date = convertToUTC7;
   //date.setHours(23, 59);
   var jam = date.getHours();
   if (jam < 10) {
@@ -832,5 +827,19 @@ function updateJam() {
     }
   }
 }
+
+function convertToUTC7(date = new Date()) {
+  // Get local time in milliseconds
+  const localTime = date.getTime();
+  // Get local timezone offset in minutes and convert to milliseconds
+  const localOffset = date.getTimezoneOffset() * 60000;
+  // Jakarta is UTC+7 → offset from UTC in milliseconds
+  const utc7Offset = 7 * 60 * 60000;
+  // Convert local time to UTC+7
+  const utc7Time = new Date(localTime + localOffset + utc7Offset);
+  return utc7Time;
+}
+
+
 
 setInterval(updateJam, 1000);
