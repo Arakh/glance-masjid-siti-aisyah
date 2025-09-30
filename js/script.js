@@ -776,22 +776,22 @@ function updateJam() {
     }
     bulan++;
     list_jadwal = [];
-    var imsak = adjustWaktu(data[bulan + "_" + tahun][tanggal].imsak, adj_imsak);
+    var imsak = adjustWaktu(data[bulan + "_" + tahun][tanggal-1].imsak, adj_imsak);
     document.getElementById("imsak").innerHTML = imsak;
     list_jadwal.push(imsak);
-    var subuh = adjustWaktu(data[bulan + "_" + tahun][tanggal].subuh, adj_subuh);
+    var subuh = adjustWaktu(data[bulan + "_" + tahun][tanggal-1].subuh, adj_subuh);
     document.getElementById("subuh").innerHTML = subuh;
     list_jadwal.push(subuh);
-    var dzuhur = adjustWaktu(data[bulan + "_" + tahun][tanggal].dzuhur, adj_dzuhur);
+    var dzuhur = adjustWaktu(data[bulan + "_" + tahun][tanggal-1].dzuhur, adj_dzuhur);
     document.getElementById("dzuhur").innerHTML = dzuhur;
     list_jadwal.push(dzuhur);
-    var ashar = data[bulan + "_" + tahun][tanggal].ashar;
+    var ashar = data[bulan + "_" + tahun][tanggal-1].ashar;
     document.getElementById("ashar").innerHTML = ashar;
     list_jadwal.push(ashar);
-    var maghrib = data[bulan + "_" + tahun][tanggal].maghrib;
+    var maghrib = data[bulan + "_" + tahun][tanggal-1].maghrib;
     document.getElementById("maghrib").innerHTML = maghrib;
     list_jadwal.push(maghrib);
-    var isya = data[bulan + "_" + tahun][tanggal].isya;
+    var isya = data[bulan + "_" + tahun][tanggal-1].isya;
     document.getElementById("isya").innerHTML = isya;
     list_jadwal.push(isya);
     cur_date = tanggal;
@@ -800,10 +800,23 @@ function updateJam() {
   if (list_jadwal.length == 6) {
     var x = -1;
     for (var i = 0; i < list_jadwal.length; i++) {
+      var re_jam = parseInt(list_jadwal[i].split(":")[0]) - parseInt(jam);
+      var re_menit = parseInt(list_jadwal[i].split(":")[1]) - parseInt(menit);
       if (parseInt(list_jadwal[i].split(":")[0]) > parseInt(jam) || parseInt(list_jadwal[i].split(":")[0]) == parseInt(jam) && parseInt(list_jadwal[i].split(":")[1]) > parseInt(menit)) {
         x = i;
         break;
       }
+      if (re_jam == 0) {
+        if (re_menit < -10) {
+          document.getElementById('overlay').style.visibility = 'hidden'; 
+          break;
+        }
+        if (re_menit < -5) {
+          // menampilkan layar gelap ketika waktu sholat
+          document.getElementById('overlay').style.visibility = 'visible';
+          break;
+        }
+      } 
     }
     if (x != -1) {
       var re_jam = parseInt(list_jadwal[x].split(":")[0]) - parseInt(jam);
@@ -822,8 +835,11 @@ function updateJam() {
       if (re_detik < 10) {
         re_detik = "0" + re_detik;
       }
-      document.getElementById("waktu-reminder").innerHTML = "-" + re_jam + ":" + re_menit + ":" + re_detik + " menuju waktu " + list_nama[x];
-      document.getElementById("reminder").style.backgroundColor = "rgba(180, 20, 0, 0.6)";
+      // hanya ditampilkan 15 menit sebelum sholat dimulai
+      if (re_jam == 0 && re_menit <= 15) {
+        document.getElementById("waktu-reminder").innerHTML = "-" + re_jam + ":" + re_menit + ":" + re_detik + " menuju waktu " + list_nama[x];
+        document.getElementById("reminder").style.backgroundColor = "rgba(180, 20, 0, 0.6)"; 
+      }
     }
   }
 }
