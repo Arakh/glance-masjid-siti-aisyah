@@ -155,7 +155,7 @@ p.jam {
 }
 
 .data {
-	margin: 0.5vh 1vw 0.5vh 1vw;
+	margin: 0.5vh 1vw 1.5vh 1vw;
 	width: 10%;
 	text-align: center;
 	border-radius: 2px;
@@ -281,7 +281,7 @@ p.text-reminder {
   display: flex;
   flex-direction: column;
   justify-content: flex-end; /* Push content to bottom */
-  height: 85vh;
+  height: 86vh;
 }
 
 /*================================

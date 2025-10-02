@@ -826,7 +826,7 @@ function updateJam() {
       // if (re_menit < 10) {
       //   re_menit = "0" + re_menit;
       // }
-      // var re_detik = 60 - parseInt(detik);
+      var re_detik = 60 - parseInt(detik);
       // if (re_detik < 10) {
       //   re_detik = "0" + re_detik;
       // }
