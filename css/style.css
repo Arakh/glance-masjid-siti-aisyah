@@ -148,7 +148,7 @@ p.jam {
 
 .content {
 	display: flex;
-	height: 76%;
+	/* height: 80%; */
 	align-items: flex-end;
 	justify-content: center;
 	flex-direction: row;
@@ -276,6 +276,12 @@ p.text-reminder {
 	animation: up-two 40s ease infinite;
 	-moz-animation: up-two 40s ease infinite;
 	-webkit-animation: up-two 40s ease infinite;
+}
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Push content to bottom */
+  height: 85vh;
 }
 
 /*================================

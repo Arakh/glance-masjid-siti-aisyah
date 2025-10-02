@@ -806,17 +806,12 @@ function updateJam() {
         x = i;
         break;
       }
-      if (re_jam == 0) {
-        if (re_menit < -10) {
-          document.getElementById('overlay').style.visibility = 'hidden'; 
-          break;
-        }
-        if (re_menit < -5) {
-          // menampilkan layar gelap ketika waktu sholat
-          document.getElementById('overlay').style.visibility = 'visible';
-          break;
-        }
-      } 
+      if (re_jam == 0 && re_menit < -5 && re_menit >= -10) {
+        document.getElementById('overlay').style.visibility = 'visible'; 
+        break;
+      } else {
+        document.getElementById('overlay').style.visibility = 'hidden';
+      }
     }
     if (x != -1) {
       var re_jam = parseInt(list_jadwal[x].split(":")[0]) - parseInt(jam);
@@ -825,19 +820,19 @@ function updateJam() {
         re_menit = 60 - parseInt(menit) + parseInt(list_jadwal[x].split(":")[1]) - 1;
         re_jam = re_jam - 1;
       }
-      if (re_jam < 10) {
-        re_jam = "0" + re_jam;
-      }
-      if (re_menit < 10) {
-        re_menit = "0" + re_menit;
-      }
-      var re_detik = 60 - parseInt(detik);
-      if (re_detik < 10) {
-        re_detik = "0" + re_detik;
-      }
+      // if (re_jam < 10) {
+      //   re_jam = "0" + re_jam;
+      // }
+      // if (re_menit < 10) {
+      //   re_menit = "0" + re_menit;
+      // }
+      // var re_detik = 60 - parseInt(detik);
+      // if (re_detik < 10) {
+      //   re_detik = "0" + re_detik;
+      // }
       // hanya ditampilkan 15 menit sebelum sholat dimulai
       if (re_jam == 0 && re_menit <= 15) {
-        document.getElementById("waktu-reminder").innerHTML = "-" + re_jam + ":" + re_menit + ":" + re_detik + " menuju waktu " + list_nama[x];
+        document.getElementById("waktu-reminder").innerHTML = re_menit + ":" + re_detik + " menuju waktu " + list_nama[x];
         document.getElementById("reminder").style.backgroundColor = "rgba(180, 20, 0, 0.6)"; 
       }
     }
