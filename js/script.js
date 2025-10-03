@@ -831,10 +831,10 @@ function updateJam() {
       //   re_detik = "0" + re_detik;
       // }
       // hanya ditampilkan 15 menit sebelum sholat dimulai
-      if (re_jam == 0 && re_menit <= 15) {
-        document.getElementById("waktu-reminder").innerHTML = re_menit + ":" + re_detik + " menuju waktu " + list_nama[x];
-        document.getElementById("reminder").style.backgroundColor = "rgba(180, 20, 0, 0.6)"; 
-      }
+      // if (re_jam == 0 && re_menit <= 15) {
+      //   document.getElementById("waktu-reminder").innerHTML = re_menit + ":" + re_detik + " menuju waktu " + list_nama[x];
+      //   document.getElementById("reminder").style.backgroundColor = "rgba(180, 20, 0, 0.6)"; 
+      // }
     }
   }
 }
