@@ -733,8 +733,8 @@ function updateJam() {
   if (action != "preview") {
     return;
   }
+  // dummy.setSeconds(dummy.getSeconds() + 1);
   var date = convertToUTC7();
-  //date.setHours(23, 59);
   var jam = date.getHours();
   if (jam < 10) {
     jam = "0" + jam;
@@ -798,45 +798,46 @@ function updateJam() {
     console.log("update : " + tanggal + "-" + bulan + "-" + tahun);
   }
   if (list_jadwal.length == 6) {
-    var x = -1;
-    for (var i = 0; i < list_jadwal.length; i++) {
-      var re_jam = parseInt(list_jadwal[i].split(":")[0]) - parseInt(jam);
-      var re_menit = parseInt(list_jadwal[i].split(":")[1]) - parseInt(menit);
-      if (parseInt(list_jadwal[i].split(":")[0]) > parseInt(jam) || parseInt(list_jadwal[i].split(":")[0]) == parseInt(jam) && parseInt(list_jadwal[i].split(":")[1]) > parseInt(menit)) {
-        x = i;
-        break;
-      }
-      if (re_jam == 0 && re_menit < -5 && re_menit >= -10) {
-        document.getElementById('overlay').style.visibility = 'visible'; 
+    const FIVETEEN_MINUTES_BEFORE = -15 * 60;
+    const SEVEN_MINUTES_AFTER = 7 * 60;
+    const FIFTEEN_MINUTES_AFTER = 15 * 60;
+    for (var i = 1; i < list_jadwal.length; i++) {
+      var curr_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+      var gap_time = getTimeDifferenceInSeconds(curr_time, list_jadwal[i]+":00");
+
+      if (gap_time >= FIVETEEN_MINUTES_BEFORE && gap_time <= 0) {
+        document.getElementById("waktu-reminder").innerHTML = formatTime(Math.abs(gap_time)) + " menuju waktu " + list_nama[i];
+        document.getElementById("reminder").style.backgroundColor = "rgba(180, 20, 0, 0.6)";
         break;
       } else {
-        document.getElementById('overlay').style.visibility = 'hidden';
+        document.getElementById("waktu-reminder").innerHTML = '';           // Remove all inner content
+        document.getElementById("reminder").removeAttribute('style'); // Remove inline style attribute
       }
-    }
-    if (x != -1) {
-      var re_jam = parseInt(list_jadwal[x].split(":")[0]) - parseInt(jam);
-      var re_menit = parseInt(list_jadwal[x].split(":")[1]) - parseInt(menit);
-      if (re_menit < 0) {
-        re_menit = 60 - parseInt(menit) + parseInt(list_jadwal[x].split(":")[1]) - 1;
-        re_jam = re_jam - 1;
+
+      if (gap_time > SEVEN_MINUTES_AFTER && gap_time < FIFTEEN_MINUTES_AFTER) {
+        document.getElementById('overlay-sholat').style.visibility = 'visible';
+        document.getElementById('overlay-content').innerHTML = 'Waktunya Sholat ' + list_nama[i];
+        break;
+      } else {
+        document.getElementById('overlay-sholat').style.visibility = 'hidden';
       }
-      // if (re_jam < 10) {
-      //   re_jam = "0" + re_jam;
-      // }
-      // if (re_menit < 10) {
-      //   re_menit = "0" + re_menit;
-      // }
-      var re_detik = 60 - parseInt(detik);
-      // if (re_detik < 10) {
-      //   re_detik = "0" + re_detik;
-      // }
-      // hanya ditampilkan 15 menit sebelum sholat dimulai
-      // if (re_jam == 0 && re_menit <= 15) {
-      //   document.getElementById("waktu-reminder").innerHTML = re_menit + ":" + re_detik + " menuju waktu " + list_nama[x];
-      //   document.getElementById("reminder").style.backgroundColor = "rgba(180, 20, 0, 0.6)"; 
-      // }
     }
   }
+}
+
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+
+  // Pad with leading zeros if needed
+  const formattedMins = String(mins).padStart(2, '0');
+  const formattedSecs = String(secs).padStart(2, '0');
+
+  return `${formattedMins}:${formattedSecs}`;
+}
+
+function display(number) {
+  return number < 10 ? "0" + number : number;
 }
 
 function convertToUTC7(date = new Date()) {
@@ -851,6 +852,18 @@ function convertToUTC7(date = new Date()) {
   return utc7Time;
 }
 
+function getTimeDifferenceInSeconds(currentTime, sholatTime) {
+  // Parse time strings into hours, minutes, seconds
+  const [h1, m1, s1] = currentTime.split(':').map(Number);
+  const [h2, m2, s2] = sholatTime.split(':').map(Number);
 
+  const ms1 = (h1 * 3600 + m1 * 60 + s1);
+  const ms2 = (h2 * 3600 + m2 * 60 + s2);
 
+  return ms1 - ms2;
+}
+
+// const dummy = new Date();
+// dummy.setHours(11);
+// dummy.setMinutes(54);
 setInterval(updateJam, 1000);
