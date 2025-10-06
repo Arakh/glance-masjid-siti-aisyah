@@ -200,7 +200,7 @@ p.text-reminder {
 .footer {
 	height: 6%;
 	text-align: center;
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: rgba(0, 0, 0, 1);
 }
 
 .marquee {
@@ -230,7 +230,7 @@ p.text-reminder {
 	height: 100%;
 	font-size: 1.8vw;
 	text-align: center;
-	color: white;
+	color: yellow;
 	margin: 6px;
 	line-height: 4vh;
 
