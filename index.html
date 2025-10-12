@@ -598,6 +598,23 @@
 			</select>
 			<br>
 			<br>
+			<p>Jeda Waktu Iqomah</p>
+			<label for="jeda-shubuh"> Shubuh : </label>
+			<input type="text" name="jeda-shubuh" id="jeda-shubuh" value="15">
+			<br>
+			<label for="jeda-dzuhur"> Dzuhur : </label>
+			<input type="text" name="jeda-dzuhur" id="jeda-dzuhur" value="10">
+			<br>
+			<label for="jeda-ashar"> Ashar : </label>
+			<input type="text" name="jeda-ashar" id="jeda-ashar" value="10">
+			<br>
+			<label for="jeda-maghrib"> Maghrib : </label>
+			<input type="text" name="jeda-maghrib" id="jeda-maghrib" value="10">
+			<br>
+			<label for="jeda-dzuhur"> Isya : </label>
+			<input type="text" name="jeda-isya" id="jeda-isya" value="10">
+			<br>
+			<br>
 			<p>Penyesuaian Waktu</p>
 			<label for="adj-imsak"> - Imsak : </label>
 			<select class="in10" id="adj-imsak">
@@ -699,7 +716,7 @@
 		<h2>Footer</h2>
 		<div class="m2">
 			<p>Informasi Pertama</p>
-			<input class="in90" type="text" id="informasi-1" value="Alhamdulillah kencleng Jumat 11 Rabiul Akhir 1447 H/ 3 Oktober 2025 Sebesar `Rp 180.500`, Jazakallahu khairan katsiron">
+			<input class="in90" type="text" id="informasi-1" value="Alhamdulillah kencleng Jumat 18 Rabiul Akhir 1447 H/ 10 Oktober 2025 Sebesar `Rp 98.400`, Jazakallahu khairan katsiron">
 			<p>Informasi Kedua</p>
 			<input class="in90" type="text" id="informasi-2" value="Setiap rupiah yang kau sedekahkan, menjadi saksi cinta kepada Allah dan sesama">
 		</div>
@@ -719,7 +736,11 @@
 				</div>
 			</div>
 			<div class="content-wrapper">
-				<div class="reminder" id="reminder">
+				<div class="countdown-wrapper" id="countdown-adzan" style="visibility: hidden;">
+					<div class="countdown-label" id="countdown-adzan-label"></div>
+					<div class="countdown-timer" id="countdown-adzan-time">00:00</div>
+				</div>
+				<div class="reminder" id="reminder" style="background-color: red; visibility: hidden;">
 					<p class="text-reminder" id="waktu-reminder"></p>
 				</div>
 				<div class="content" id="content">

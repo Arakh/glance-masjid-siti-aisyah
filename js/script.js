@@ -126,6 +126,8 @@ function getSetting() {
   setting.isya = getValue("adj-isya");
   setting.informasi_1 = getValue("informasi-1");
   setting.informasi_2 = getValue("informasi-2");
+  var jeda = [getValue("jeda-shubuh"), getValue("jeda-dzuhur"), getValue("jeda-ashar"), getValue("jeda-maghrib"), getValue("jeda-isya")];
+  setting.jeda = jeda;
   return setting;
 }
 
@@ -180,6 +182,8 @@ function setSetting(setting) {
   setValue("adj-isya", setting.isya);
   setValue("informasi-1", setting.informasi_1);
   setValue("informasi-2", setting.informasi_2);
+  var jeda = [setting.jeda_shubuh, setting.jeda_dzuhur, setting.jeda_ashar, setting.jeda_maghrib, setting.jeda_isya];
+  setValue("jeda", jeda);
 }
 
 function selesai() {
@@ -187,7 +191,7 @@ function selesai() {
   if (setting != null) {
     setConfig(setting);
     var self = window.location;
-    self.href = self.origin + self.pathname + "?action=preview&id=" + setting.id + "&ht=" + setting.head_type + "&ha=" + setting.hide_alamat + "&hj=" + setting.hide_jam + "&hs=" + setting.hide_jam_detik + "&hm=" + setting.hide_tanggal_masehi + "&hh=" + setting.hide_tanggal_hijriah + "&bg=" + setting.background + "&ct=" + setting.content_type + "&jt=" + setting.jadwal_type + "&im=" + setting.imsak + "&sb=" + setting.subuh + "&dz=" + setting.dzuhur + "&as=" + setting.ashar + "&mg=" + setting.maghrib + "&is=" + setting.isya + "&nama=" + setting.nama + "&alamat=" + setting.alamat + "&info1=" + setting.informasi_1 + "&info2=" + setting.informasi_2;
+    self.href = self.origin + self.pathname + "?action=preview&id=" + setting.id + "&ht=" + setting.head_type + "&ha=" + setting.hide_alamat + "&hj=" + setting.hide_jam + "&hs=" + setting.hide_jam_detik + "&hm=" + setting.hide_tanggal_masehi + "&hh=" + setting.hide_tanggal_hijriah + "&bg=" + setting.background + "&ct=" + setting.content_type + "&jt=" + setting.jadwal_type + "&im=" + setting.imsak + "&sb=" + setting.subuh + "&dz=" + setting.dzuhur + "&as=" + setting.ashar + "&mg=" + setting.maghrib + "&is=" + setting.isya + "&nama=" + setting.nama + "&alamat=" + setting.alamat + "&info1=" + setting.informasi_1 + "&info2=" + setting.informasi_2 + "&jeda="+setting.jeda.join(',');
   }
 }
 
@@ -799,28 +803,48 @@ function updateJam() {
   }
   if (list_jadwal.length == 6) {
     const FIVETEEN_MINUTES_BEFORE = -15 * 60;
-    const SEVEN_MINUTES_AFTER = 7 * 60;
-    const FIFTEEN_MINUTES_AFTER = 15 * 60;
+    const FIVE_MINUTES = 5 * 60;
+    const ADZAN_TIME = 3 * 60;
+    var jeda = url.searchParams.get("jeda").split(",");
     for (var i = 1; i < list_jadwal.length; i++) {
       var curr_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
       var gap_time = getTimeDifferenceInSeconds(curr_time, list_jadwal[i]+":00");
 
       if (gap_time >= FIVETEEN_MINUTES_BEFORE && gap_time <= 0) {
-        document.getElementById("waktu-reminder").innerHTML = formatTime(Math.abs(gap_time)) + " menuju waktu " + list_nama[i];
-        document.getElementById("reminder").style.backgroundColor = "rgba(180, 20, 0, 0.6)";
+        document.getElementById("countdown-adzan-label").innerHTML = "Waktu menuju " + list_nama[i];
+        document.getElementById("countdown-adzan-time").innerHTML = formatTime(Math.abs(gap_time));
+        document.getElementById("countdown-adzan").style.visibility = "visible";
         break;
-      } else {
-        document.getElementById("waktu-reminder").innerHTML = '';           // Remove all inner content
-        document.getElementById("reminder").removeAttribute('style'); // Remove inline style attribute
       }
 
-      if (gap_time > SEVEN_MINUTES_AFTER && gap_time < FIFTEEN_MINUTES_AFTER) {
+      var jedaSeconds = parseInt(jeda[i-1]) * 60;
+      if (gap_time > 0) {
+        if (gap_time < ADZAN_TIME) {
+          document.getElementById("waktu-reminder").innerHTML = "Waktunya Adzan " + list_nama[i];
+          document.getElementById("reminder").style.visibility = "visible";
+          break;
+        } else {
+          document.getElementById('reminder').style.visibility = 'hidden';
+        }
+        
+        if (gap_time <= jedaSeconds) {
+          var remaining_time = jedaSeconds - gap_time;
+          document.getElementById("countdown-adzan-label").innerHTML = "Waktu menuju Iqomah";
+          document.getElementById("countdown-adzan-time").innerHTML = formatTime(remaining_time);
+          document.getElementById("countdown-adzan").style.visibility = "visible";
+          break;
+        } else {
+          document.getElementById('countdown-adzan').style.visibility = 'hidden';
+        }
+      }
+
+      if (gap_time > jedaSeconds && gap_time < (jedaSeconds + FIVE_MINUTES)) {
         document.getElementById('overlay-sholat').style.visibility = 'visible';
         document.getElementById('overlay-content').innerHTML = 'Waktunya Sholat ' + list_nama[i];
         break;
       } else {
         document.getElementById('overlay-sholat').style.visibility = 'hidden';
-      }
+      }      
     }
   }
 }
@@ -865,5 +889,5 @@ function getTimeDifferenceInSeconds(currentTime, sholatTime) {
 
 // const dummy = new Date();
 // dummy.setHours(11);
-// dummy.setMinutes(54);
+// dummy.setMinutes(46);
 setInterval(updateJam, 1000);

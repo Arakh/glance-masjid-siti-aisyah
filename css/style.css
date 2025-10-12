@@ -186,8 +186,8 @@ p.info-jam {
 
 .reminder {
 	height: 7%;
-	width: 30%;
-	margin: 1vh auto 1vh auto;
+	width: auto;
+	margin: 2vh auto 2vh auto;
 	border-radius: 2px;
 	text-align: center;
 }
@@ -200,7 +200,40 @@ p.text-reminder {
 .footer {
 	height: 6%;
 	text-align: center;
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: rgba(0, 0, 0, 1);
+}
+
+.countdown-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+  padding: 20px;
+  border-radius: 12px;
+  width: 220px;
+  margin: auto;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.countdown-label {
+  font-size: 1em;
+  color: #f0f0f0;
+  margin-bottom: 10px;
+}
+
+.countdown-timer {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #fff;
+  background-color: #222;
+  padding: 10px 20px;
+  border-radius: 8px;
+  letter-spacing: 2px;
+  box-shadow: inset 0 -4px 0 #000, inset 0 4px 0 #444;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  font-family: 'Courier New', monospace;
 }
 
 .marquee {
@@ -230,7 +263,7 @@ p.text-reminder {
 	height: 100%;
 	font-size: 1.8vw;
 	text-align: center;
-	color: white;
+	color: yellow;
 	margin: 6px;
 	line-height: 4vh;
 
