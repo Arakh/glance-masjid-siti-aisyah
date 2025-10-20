@@ -718,12 +718,15 @@ function adjustWaktu(orig, adj) {
     }
   } else {
     var orig_kiri_res = orig_kiri;
+    var adj_kanan_res = adj_res;
+    if (adj_kanan_res < 0) {
+      adj_kanan_res = 60 + adj_kanan_res;
+      orig_kiri_res--;
+    } else if (adj_kanan_res < 10) {
+      adj_kanan_res = "0" + adj_kanan_res;
+    }
     if (orig_kiri_res < 10) {
       orig_kiri_res = "0" + orig_kiri_res;
-    }
-    var adj_kanan_res = adj_res;
-    if (adj_kanan_res < 10) {
-      adj_kanan_res = "0" + adj_kanan_res;
     }
     return orig_kiri_res + ":" + adj_kanan_res;
   }
