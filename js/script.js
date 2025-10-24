@@ -812,7 +812,6 @@ function updateJam() {
     for (var i = 1; i < list_jadwal.length; i++) {
       var curr_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
       var gap_time = getTimeDifferenceInSeconds(curr_time, list_jadwal[i]+":00");
-
       if (gap_time >= FIVETEEN_MINUTES_BEFORE && gap_time <= 0) {
         document.getElementById("countdown-adzan-label").innerHTML = "Waktu menuju " + list_nama[i];
         document.getElementById("countdown-adzan-time").innerHTML = formatTime(Math.abs(gap_time));
@@ -824,10 +823,10 @@ function updateJam() {
       if (gap_time > 0) {
         if (gap_time < ADZAN_TIME) {
           document.getElementById("waktu-reminder").innerHTML = "Waktunya Adzan " + list_nama[i];
-          // document.getElementById("reminder").style.visibility = "visible";
+          document.getElementById("reminder").style.visibility = "visible";
           break;
         } else {
-          // document.getElementById('reminder').style.visibility = 'hidden';
+          document.getElementById('reminder').style.visibility = 'hidden';
         }
         
         if (gap_time <= jedaSeconds) {

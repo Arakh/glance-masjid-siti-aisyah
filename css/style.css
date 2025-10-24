@@ -111,7 +111,7 @@ p {
 
 .header {
 	display: flex;
-	height: 14%;
+	height: 14vh;
 	align-items: center;
 	justify-content: center;
 	background-color: rgba(0, 0, 0, 0.6);
@@ -156,7 +156,7 @@ p.jam {
 
 .data {
 	margin: 0.5vh 1vw 1.5vh 1vw;
-	width: 10%;
+	width: 20vh;
 	text-align: center;
 	border-radius: 2px;
 	background-color: rgba(0, 0, 0, 0.6);
@@ -185,9 +185,9 @@ p.info-jam {
 }
 
 .reminder {
-	height: 7%;
+	height: 7vh;
 	width: auto;
-	margin: 2vh auto 2vh auto;
+	/* margin: auto; */
 	border-radius: 2px;
 	text-align: center;
 }
@@ -198,7 +198,7 @@ p.text-reminder {
 }
 
 .footer {
-	height: 6%;
+	height: 6vh;
 	text-align: center;
 	background-color: rgba(0, 0, 0, 1);
 }
@@ -207,7 +207,7 @@ p.text-reminder {
   width: auto;   /* Set your desired width */
   height: 35vh;  /* Set your desired height */
   object-fit: cover; /* Optional: crop to fit */
-  margin: auto;
+  margin: 10px auto auto auto;
 }
 
 .countdown-wrapper {
@@ -217,7 +217,7 @@ p.text-reminder {
   justify-content: center;
   font-family: 'Segoe UI', sans-serif;
   background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
-  padding: 20px;
+  padding: 10px;
   border-radius: 12px;
   width: 220px;
   margin: auto;
