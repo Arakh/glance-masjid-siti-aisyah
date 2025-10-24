@@ -205,7 +205,7 @@ p.text-reminder {
 
 .carousel img {
   width: auto;   /* Set your desired width */
-  height: 350px;  /* Set your desired height */
+  height: 35vh;  /* Set your desired height */
   object-fit: cover; /* Optional: crop to fit */
   margin: auto;
 }
