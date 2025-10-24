@@ -824,10 +824,10 @@ function updateJam() {
       if (gap_time > 0) {
         if (gap_time < ADZAN_TIME) {
           document.getElementById("waktu-reminder").innerHTML = "Waktunya Adzan " + list_nama[i];
-          document.getElementById("reminder").style.visibility = "visible";
+          // document.getElementById("reminder").style.visibility = "visible";
           break;
         } else {
-          document.getElementById('reminder').style.visibility = 'hidden';
+          // document.getElementById('reminder').style.visibility = 'hidden';
         }
         
         if (gap_time <= jedaSeconds) {
@@ -835,18 +835,22 @@ function updateJam() {
           document.getElementById("countdown-adzan-label").innerHTML = "Waktu menuju Iqomah";
           document.getElementById("countdown-adzan-time").innerHTML = formatTime(remaining_time);
           document.getElementById("countdown-adzan").style.visibility = "visible";
+          // document.getElementById('carousel').style.visibility = 'hidden';
           break;
         } else {
           document.getElementById('countdown-adzan').style.visibility = 'hidden';
+          // document.getElementById('carousel').style.visibility = 'visible';
         }
       }
 
       if (gap_time > jedaSeconds && gap_time < (jedaSeconds + FIVE_MINUTES)) {
         document.getElementById('overlay-sholat').style.visibility = 'visible';
         document.getElementById('overlay-content').innerHTML = 'Waktunya Sholat ' + list_nama[i];
+        document.getElementById('carousel').style.visibility = 'hidden';
         break;
       } else {
         document.getElementById('overlay-sholat').style.visibility = 'hidden';
+        document.getElementById('carousel').style.visibility = 'visible';
       }      
     }
   }
@@ -894,3 +898,14 @@ function getTimeDifferenceInSeconds(currentTime, sholatTime) {
 // dummy.setHours(11);
 // dummy.setMinutes(46);
 setInterval(updateJam, 1000);
+
+$(document).ready(function(){
+  $('.carousel').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 10000,
+    centerMode: true, // center the active slideadaptiveHeight: false
+    adaptiveHeight: false
+  });
+});

@@ -203,6 +203,13 @@ p.text-reminder {
 	background-color: rgba(0, 0, 0, 1);
 }
 
+.carousel img {
+  width: auto;   /* Set your desired width */
+  height: 350px;  /* Set your desired height */
+  object-fit: cover; /* Optional: crop to fit */
+  margin: auto;
+}
+
 .countdown-wrapper {
   display: flex;
   flex-direction: column;
