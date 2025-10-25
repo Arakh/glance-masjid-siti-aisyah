@@ -535,11 +535,11 @@ function preview() {
   var p_node_info_1 = document.createElement("p");
   var p_textnode_info_1 = document.createTextNode(informasi_1);
   p_node_info_1.appendChild(p_textnode_info_1);
-  document.getElementById("informasi").appendChild(p_node_info_1);
+  // document.getElementById("informasi").appendChild(p_node_info_1);
   var p_node_info_2 = document.createElement("p");
   var p_textnode_info_2 = document.createTextNode(informasi_2);
   p_node_info_2.appendChild(p_textnode_info_2);
-  document.getElementById("informasi").appendChild(p_node_info_2);
+  // document.getElementById("informasi").appendChild(p_node_info_2);
   document.getElementById("tunggu").style.display = "none";
   document.getElementById("preview").style.backgroundImage = "url(" + url_background + ")";
   document.getElementById("preview").style.display = "block";
@@ -808,48 +808,53 @@ function updateJam() {
     const FIVETEEN_MINUTES_BEFORE = -15 * 60;
     const FIVE_MINUTES = 5 * 60;
     const ADZAN_TIME = 3 * 60;
-    var jeda = url.searchParams.get("jeda").split(",");
+    // var jeda = url.searchParams.get("jeda").split(",");
+    var jeda = ["15", "12", "12", "12", "12"];
     for (var i = 1; i < list_jadwal.length; i++) {
       var curr_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
       var gap_time = getTimeDifferenceInSeconds(curr_time, list_jadwal[i]+":00");
       if (gap_time >= FIVETEEN_MINUTES_BEFORE && gap_time <= 0) {
         document.getElementById("countdown-adzan-label").innerHTML = "Waktu menuju " + list_nama[i];
         document.getElementById("countdown-adzan-time").innerHTML = formatTime(Math.abs(gap_time));
-        document.getElementById("countdown-adzan").style.visibility = "visible";
+        document.getElementById("countdown-adzan").style.removeProperty('display');
+        document.getElementById('carousel').style.display = 'none';
         break;
+      } else {
+        document.getElementById("carousel").style.removeProperty('display');
+        document.getElementById('countdown-adzan').style.display = 'none';
       }
 
       var jedaSeconds = parseInt(jeda[i-1]) * 60;
       if (gap_time > 0) {
         if (gap_time < ADZAN_TIME) {
           document.getElementById("waktu-reminder").innerHTML = "Waktunya Adzan " + list_nama[i];
-          document.getElementById("reminder").style.visibility = "visible";
+          document.getElementById("reminder").style.removeProperty('display');
+          document.getElementById("carousel").style.display = 'none';
           break;
         } else {
-          document.getElementById('reminder').style.visibility = 'hidden';
+          document.getElementById('reminder').style.display = 'none';
+          document.getElementById("carousel").style.removeProperty('display');
         }
         
         if (gap_time <= jedaSeconds) {
           var remaining_time = jedaSeconds - gap_time;
           document.getElementById("countdown-adzan-label").innerHTML = "Waktu menuju Iqomah";
           document.getElementById("countdown-adzan-time").innerHTML = formatTime(remaining_time);
-          document.getElementById("countdown-adzan").style.visibility = "visible";
-          // document.getElementById('carousel').style.visibility = 'hidden';
+          document.getElementById("countdown-adzan").style.removeProperty('display');
+          document.getElementById('carousel').style.display = 'none';
           break;
         } else {
-          document.getElementById('countdown-adzan').style.visibility = 'hidden';
-          // document.getElementById('carousel').style.visibility = 'visible';
+          document.getElementById('countdown-adzan').style.display = 'none';
+          document.getElementById('carousel').style.removeProperty("display");
         }
       }
 
       if (gap_time > jedaSeconds && gap_time < (jedaSeconds + FIVE_MINUTES)) {
-        document.getElementById('overlay-sholat').style.visibility = 'visible';
+        document.getElementById('overlay-sholat').style.removeProperty('display');
         document.getElementById('overlay-content').innerHTML = 'Waktunya Sholat ' + list_nama[i];
-        document.getElementById('carousel').style.visibility = 'hidden';
         break;
       } else {
-        document.getElementById('overlay-sholat').style.visibility = 'hidden';
-        document.getElementById('carousel').style.visibility = 'visible';
+        document.getElementById('overlay-sholat').style.display = 'none';
       }      
     }
   }
@@ -894,8 +899,8 @@ function getTimeDifferenceInSeconds(currentTime, sholatTime) {
 }
 
 // const dummy = new Date();
-// dummy.setHours(11);
-// dummy.setMinutes(46);
+// dummy.setHours(18);
+// dummy.setMinutes(57);
 setInterval(updateJam, 1000);
 
 $(document).ready(function(){
@@ -903,8 +908,31 @@ $(document).ready(function(){
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 10000,
+    autoplaySpeed: 12000,
     centerMode: true, // center the active slideadaptiveHeight: false
     adaptiveHeight: false
   });
 });
+
+function Marquee(selector, speed) {
+  const parentSelector = document.querySelector(selector);
+  const clone = parentSelector.innerHTML;
+  const firstElement = parentSelector.children[0];
+  let i = 0;
+  console.log(firstElement);
+  parentSelector.insertAdjacentHTML('beforeend', clone);
+  parentSelector.insertAdjacentHTML('beforeend', clone);
+
+  setInterval(function () {
+    firstElement.style.marginLeft = `-${i}px`;
+    if (i > firstElement.clientWidth) {
+      i = 0;
+    }
+    i = i + speed;
+  }, 0);
+}
+
+//after window is completed load
+//1 class selector for marquee
+//2 marquee speed 0.2
+window.addEventListener('load', Marquee('.marquee-x', 0.2))
