@@ -838,7 +838,7 @@ function updateJam() {
         
         if (gap_time <= jedaSeconds) {
           var remaining_time = jedaSeconds - gap_time;
-          document.getElementById("countdown-adzan-label").innerHTML = "Waktu menuju Iqomah";
+          document.getElementById("countdown-adzan-label").innerHTML = "Menuju Iqomah";
           document.getElementById("countdown-adzan-time").innerHTML = formatTime(remaining_time);
           document.getElementById("countdown-adzan").style.removeProperty('display');
           document.getElementById('carousel').style.display = 'none';
@@ -920,7 +920,6 @@ function Marquee(selector, speed) {
   const firstElement = parentSelector.children[0];
   let i = 0;
   console.log(firstElement);
-  parentSelector.insertAdjacentHTML('beforeend', clone);
   parentSelector.insertAdjacentHTML('beforeend', clone);
 
   setInterval(function () {
