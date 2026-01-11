@@ -545,6 +545,78 @@ function preview() {
   document.getElementById("preview").style.display = "block";
 }
 
+// Register service worker for PWA support (only on http/https or localhost)
+if ('serviceWorker' in navigator) {
+  var canRegisterSW = (location.protocol === 'https:' || location.protocol === 'http:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+  if (canRegisterSW) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./service-worker.js').then(function (reg) {
+        console.log('Service worker registered.', reg.scope);
+
+        function promptUpdate(registration) {
+          // if there's a waiting worker, show a lightweight update UI
+          if (!registration || !registration.waiting) return;
+          // avoid creating multiple prompts
+          if (document.getElementById('sw-update')) return;
+
+          var el = document.createElement('div');
+          el.id = 'sw-update';
+          el.style.position = 'fixed';
+          el.style.left = '12px';
+          el.style.bottom = '12px';
+          el.style.zIndex = 99999;
+          el.style.background = '#222';
+          el.style.color = '#fff';
+          el.style.padding = '10px 14px';
+          el.style.borderRadius = '6px';
+          el.style.boxShadow = '0 6px 18px rgba(0,0,0,0.2)';
+          el.style.fontFamily = 'Arial, sans-serif';
+          el.style.fontSize = '14px';
+          el.innerHTML = 'Versi baru tersedia. <button id="sw-update-btn" style="margin-left:8px;padding:6px 8px;background:#fff;color:#222;border:none;border-radius:4px;cursor:pointer">Muat Ulang</button>';
+          document.body.appendChild(el);
+          document.getElementById('sw-update-btn').addEventListener('click', function () {
+            registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+          });
+        }
+
+        // listen for updatefound
+        if (reg.installing) {
+          console.log('Service worker installing');
+        }
+        reg.addEventListener('updatefound', function () {
+          var newWorker = reg.installing;
+          newWorker.addEventListener('statechange', function () {
+            if (newWorker.state === 'installed') {
+              if (navigator.serviceWorker.controller) {
+                // new content available
+                promptUpdate(reg);
+              } else {
+                console.log('Content cached for offline use.');
+              }
+            }
+          });
+        });
+
+        // If there's already a waiting worker (e.g., after a reload), prompt immediately
+        if (reg.waiting) {
+          promptUpdate(reg);
+        }
+
+      }).catch(function (err) {
+        console.log('Service worker registration failed:', err);
+      });
+
+      // When the new service worker activates, reload to pick up the changes
+      navigator.serviceWorker.addEventListener('controllerchange', function () {
+        console.log('Service worker controller changed - reloading');
+        window.location.reload();
+      });
+    });
+  } else {
+    console.warn('Service worker not registered: unsupported protocol or origin (', location.protocol, location.href, '). Serve the site over http(s) to enable PWA features.');
+  }
+}
+
 var data = {};
 var cur_date = convertToUTC7();
 var cur_index = 0;

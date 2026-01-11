@@ -1,0 +1,12 @@
+{
+  "name": "imasjid-assets",
+  "version": "1.0.0",
+  "description": "Utility scripts for iMasjid project (generate icons)",
+  "private": true,
+  "scripts": {
+    "generate-icons": "node scripts/generate-icons.js"
+  },
+  "dependencies": {
+    "sharp": "^0.32.0"
+  }
+}
