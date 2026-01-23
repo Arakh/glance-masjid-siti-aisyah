@@ -812,7 +812,7 @@ function updateJam() {
   if (action != "preview") {
     return;
   }
-  // dummy.setSeconds(dummy.getSeconds() + 1);
+  // dummy.setHours(dummy.getSeconds() + 1);
   // var date = convertToUTC7(dummy);
   var date = convertToUTC7();
 
@@ -879,6 +879,7 @@ function updateJam() {
     console.log("update : " + tanggal + "-" + bulan + "-" + tahun);
   }
   if (list_jadwal.length == 6) {
+    const KHUTBAH_MINUTES = 30 * 60;
     const FIVETEEN_MINUTES_BEFORE = -15 * 60;
     const FIVE_MINUTES = 5 * 60;
     const ADZAN_TIME = 3 * 60;
@@ -888,6 +889,7 @@ function updateJam() {
     var adzanTime = false;
     var postAdzan = false;
     var sholatTime = false;
+    var khutbahTime = false;
     var sholatIdx = 0;
     for (var index = 1; index < list_jadwal.length; index++) {
       var curr_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
@@ -899,6 +901,11 @@ function updateJam() {
         break;
       } else if (gap_seconds > 0 && gap_seconds < ADZAN_TIME) {
         adzanTime = true;
+        sholatIdx = index;
+        break;
+      } else if (index == 2 && date.getDay() == 5 && gap_seconds > 0 && gap_seconds < KHUTBAH_MINUTES) {
+        // JUMAT TIME
+        khutbahTime = true;
         sholatIdx = index;
         break;
       } else if (gap_seconds > 0 && gap_seconds < jedaSeconds) {
@@ -936,6 +943,13 @@ function updateJam() {
       document.getElementById("countdown-adzan-time").innerHTML = formatTime(remaining_time);
       document.getElementById("countdown-adzan").style.removeProperty('display');
       document.getElementById('carousel').style.display = 'none';
+      return;
+    } else {
+      document.getElementById('countdown-adzan').style.display = 'none';
+      document.getElementById('carousel').style.removeProperty("display");
+    }
+    if (khutbahTime) {
+      document.getElementById('overlay-sholat').style.removeProperty('display');
       return;
     } else {
       document.getElementById('countdown-adzan').style.display = 'none';
