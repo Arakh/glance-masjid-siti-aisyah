@@ -812,7 +812,9 @@ function updateJam() {
   if (action != "preview") {
     return;
   }
-  // dummy.setHours(dummy.getSeconds() + 1);
+  // dummy.setDate(25);
+  // dummy.setHours(12)
+  // dummy.setMinutes(6);
   // var date = convertToUTC7(dummy);
   var date = convertToUTC7();
 
@@ -923,6 +925,7 @@ function updateJam() {
       document.getElementById("countdown-adzan-time").innerHTML = formatTime(Math.abs(gap_seconds));
       document.getElementById("countdown-adzan").style.removeProperty('display');
       document.getElementById('carousel').style.display = 'none';
+      document.getElementById('overlay-sholat').style.display = 'none';
       return;
     } else {
       document.getElementById("carousel").style.removeProperty('display');
@@ -932,6 +935,7 @@ function updateJam() {
       document.getElementById("waktu-reminder").innerHTML = "Waktunya Adzan " + list_nama[sholatIdx];
       document.getElementById("reminder").style.removeProperty('display');
       document.getElementById("carousel").style.display = 'none';
+      document.getElementById('overlay-sholat').style.display = 'none';
       return;
     } else {
       document.getElementById('reminder').style.display = 'none';
@@ -943,6 +947,7 @@ function updateJam() {
       document.getElementById("countdown-adzan-time").innerHTML = formatTime(remaining_time);
       document.getElementById("countdown-adzan").style.removeProperty('display');
       document.getElementById('carousel').style.display = 'none';
+      document.getElementById('overlay-sholat').style.display = 'none';
       return;
     } else {
       document.getElementById('countdown-adzan').style.display = 'none';
@@ -1005,8 +1010,6 @@ function getTimeDifferenceInSeconds(currentTime, sholatTime) {
 }
 
 const dummy = new Date();
-dummy.setHours(19);
-dummy.setMinutes(38);
 setInterval(updateJam, 1000);
 
 $(document).ready(function () {

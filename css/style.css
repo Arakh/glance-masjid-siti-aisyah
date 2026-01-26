@@ -224,7 +224,7 @@ p.text-reminder {
   background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
   padding: 10px;
   border-radius: 12px;
-  width: 220px;
+  width: 300px;
   margin: auto;
   box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 }
